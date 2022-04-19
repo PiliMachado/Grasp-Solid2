@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections;
+using System.Text;
 
 namespace Full_GRASP_And_SOLID.Library
 {
@@ -25,14 +26,22 @@ namespace Full_GRASP_And_SOLID.Library
             this.steps.Remove(step);
         }
 
-        public void PrintRecipe()
+        public void CreateRecipe()
         {
-            Console.WriteLine($"Receta de {this.FinalProduct.Description}:");
+            StringBuilder strbuil = new StringBuilder ($"Receta de {this.FinalProduct.Description}:\n");
             foreach (Step step in this.steps)
             {
-                Console.WriteLine($"{step.Quantity} de '{step.Input.Description}' " +
-                    $"usando '{step.Equipment.Description}' durante {step.Time}");
+                strbuil.Append($"{step.Quantity} de '{step.Input.Description}' " +
+                    $"usando '{step.Equipment.Description}' durante {step.Time}\n");
             }
+            ConsolePrinter.ConsolePrinterRecipe (strbuil);
+            //Cambie el metodo"PrintRecipe()"por el metodo "CreateRecipe()" 
+            //ya que si le otorgaba la responsabilidad de imprimir a la clase Recipe esta tendria mas
+            //de una razon de cambio e incumpliria con el SRP
+            //Para solucionar esto cree la clase ConsolePrinter y el metodo "ConsolePrintRecipe()" 
+            //cumpliendo asi con el SRP ya que la unica razon de cambio seria que se quiera imprimir 
+            //con un formato diferente y si se quiere añadir una nueva forma de imprimir se deberia 
+            //crear una clase nueva para esa nueva responsabilidad
         }
     }
 }
